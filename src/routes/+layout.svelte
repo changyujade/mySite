@@ -71,7 +71,7 @@
 	}
 
 	:global(a) {
-		color: #c67414;
+		color: #dcb482;
 		text-decoration: none;
 	}
 
@@ -80,7 +80,7 @@
 	}
 
 	nav {
-		background-color: #c67414;
+		background-color: #dcb482;
 		padding: 0.75rem 1.5rem;
 		position: sticky;
 		top: 0;
@@ -133,7 +133,7 @@
 	footer {
 		text-align: center;
 		padding: 2rem 1rem;
-		color: #888;
+		color: #858480;
 		font-size: 0.85rem;
 		border-top: 1px solid #e0e0e0;
 		margin-top: 3rem;

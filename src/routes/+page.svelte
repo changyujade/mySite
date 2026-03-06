@@ -81,16 +81,16 @@
 {/if}
 
 <section class="quick-links">
-  <h2>Explore</h2>
+  <h2 class ="text-xl font-bold mb-4">Explore My Work</h2>
   <div class="card-row">
     <!--
       These are simple "cards" linking to your other pages.
       Each one is just an <a> tag styled as a box.
       Add more cards as you add more pages to your site!
     -->
-    <a href="/music" class="card">
-      <h3>My Music</h3>
-      <p>Some of the music that I've made.</p>
+    <a href="https://medium.com/@chang.j0918" class="card">
+      <h3>My Words</h3>
+      <p>I enjoy writing and sharing my thoughts on various topics. This medium site hosts my writings in French.</p>
     </a>
     <a href="/projects" class="card">
       <h3>Projects</h3>
@@ -101,16 +101,18 @@
 
 <section>
   <l> </l>
-  <h2 class ="text-2xl font-bold mb-4">About this Site</h2>
+  <h2 class ="text-xl font-bold mb-4">About this Site</h2>
   <p class = "text-gray-600 mb-4">
     This site is built with SvelteKit, a modern web framework that makes it easy to create fast, interactive websites. 
     It uses Tailwind CSS for styling and MapLibre for interactive maps. 
     The weather data is fetched from the Open-Meteo API.
+    SoundCloud is used to embed my music tracks directly on the site.
   </p>
-  <h2 class="text-2xl font-bold mb-2">APIs used</h2>
+  <h2 class="text-xl font-bold mb-2">APIs used</h2>
   <ul class="list-disc list-inside mb-4">
     <li><a href="https://open-meteo.com/" class="text-blue-500 hover:underline">Open-Meteo API</a> for weather data.</li>
     <li><a href="https://maplibre.org/" class="text-blue-500 hover:underline">MapLibre</a> for interactive maps.</li>
+    <li><a href="https://soundcloud.com/" class="text-blue-500 hover:underline">SoundCloud</a> for embedding music tracks.</li>
   </ul>
 </section>
 
@@ -157,7 +159,7 @@
   }
 
   button:hover {
-    background-color: #6b0000;
+    background-color: #dfcaba;
   }
 
   /* Bio section — appears when showBio is true */

@@ -76,6 +76,7 @@
   
     <div class="card">
       <h3>My SoundCloud Track</h3>
+      <p>These are the original music that I've made in the past. Listen to it on SoundCloud!</p>
       <iframe
         width="100%"
         height="300"
