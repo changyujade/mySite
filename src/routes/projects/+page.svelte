@@ -24,6 +24,10 @@
   let showBio = $state(false);
   const spotifyProfileUrl = "https://open.spotify.com/user/YOUR_SPOTIFY_USER_ID";
 
+  
+  const profileUrl = "https://soundcloud.com/user-929081810?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing";
+  const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(profileUrl)}&visual=true`;
+
   // A regular variable (not reactive — fine for static data)
 
 
@@ -69,11 +73,17 @@
       <p>Currently in progress. Analysing misogyny in social media content, in particular the platform "threads"</p>
     </a>
 
-    <a href={spotifyProfileUrl} class="card card-spotify" target="_blank" rel="noopener noreferrer">
-      <h3>Spotify profile + API</h3>
-      <p>View my Spotify profile and music activity. Built to connect with Spotify's Web API for profile data.</p>
-      
-    </a>
+  
+    <div class="card">
+      <h3>My SoundCloud Track</h3>
+      <iframe
+        width="100%"
+        height="300"
+        allow="autoplay"
+        src={embedUrl}
+        title="SoundCloud player"
+      ></iframe>
+    </div>
 
     <a href="https://github.com/changyujade/jazz-analyzer" class="card card-jazz">
       <h3>jazz-analyzer</h3>
