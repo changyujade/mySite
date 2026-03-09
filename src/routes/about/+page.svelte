@@ -58,21 +58,25 @@
   <p>Welcome to my personal website! I'm excited to share my projects and experiences with you. Here is a more detailed version of my background and interests.</p>
 </section>
 
+<p>目前就讀美國芝加哥大學 University of Chicago 研究所Digital Studies of Language, Culture, and History。畢業於美國Colby College，主修Computer Science+Music (資訊及音樂跨領域) 以及 French and Francophone Studies （法文與法語區研究）。大三時有機會至丹麥哥本哈根DIS Program還有瑞士日內瓦University of Geneva 進行交換，而更開拓了我的國際觀，也更奠定了我對法語的興趣。回來以後還是持續精進我的法文程度、並在2025年底得到歐語架構最高等級C2的證書。
 
-<section class="quick-links">
-  <h2>Explore</h2>
-  <div class="card-row">
-    <!--
-      These are simple "cards" linking to your other pages.
-      Each one is just an <a> tag styled as a box.
-      Add more cards as you add more pages to your site!
-    -->
-    <a href="/about" class="card">
-      <h3>About Me</h3>
-      <p>My background, interests, and goals.</p>
-    </a>
-  </div>
-</section>
+
+
+音樂和語言一直是我成長的一部份。所以大學一開始就選擇了在資訊和音樂的跨領域主修。學習期間也是持續學習並試著將我有興趣的領域做結合。在大學的Computer Science課程裡，我學習到不只Python和Java程式語言，還深入瞭解了Classes, linked list, Binary Search Trees, Hash Trees, Heaps, Queues 等Data Structure並自行寫出像是Dijkstra’s Algorithm的演算法。其次也學習到如何用科學化、系統化的方式來管理和分析資訊 (Data Management and Statistical Data Analysis), 同時運用Python的工具例如Matplotlib來視覺化(Visualise)資訊。大學三年級時更深化了我的機器學習(Machine Learning)的技術，開發了一個運用Transfer Learning & CNN技術的神經網路 (Neural Network) 來根據聲音來辨別(Classify)中國樂器的套件。2024年暑假，受教授的邀請成為他的研究助理，協助他用機器學習的套件在音樂程式設計軟體Max上創造了一個使用使用者的手勢來訓練以及生成動機變化 (music motifs)的音樂套件。
+
+求學過程中，我持續上大學提供的法語課，也確定其實語言才是我最大的興趣。所以積極尋找能夠在法語區交換的機會。也因為想申請交換，而法語研究也因緣際會地成為了我的第二個主修。</p>
+
+<l> </l>
+<p>
+  Currently studying Digital Studies of Language, Culture, and History at the University of Chicago. 
+  I graduated from Colby College with a major in Computer Science + Music and French and Francophone Studies. 
+  Music and languages ​​have always been an integral part of my growth. Therefore, I chose to major in an interdisciplinary field of information and music from the beginning of my university studies. Throughout my studies, I have continuously learned and tried to combine areas of interest with my learning. In my Computer Science courses, I learned not only Python and Java programming languages, but also gained in-depth understanding of data structures such as Classes, linked lists, Binary Search Trees, Hash Trees, Heaps, and Queues, and even wrote my own algorithms similar to Dijkstra's Algorithm. Secondly, I learned how to manage and analyze information (Data Management and Statistical Data Analysis) in a scientific and systematic way, while using Python tools such as Matplotlib to visualize the information. 
+  
+  In my third year of college, I further deepened my machine learning skills, developing a kit that uses transfer learning and CNN technologies to classify Chinese musical instruments based on sound. In the summer of 2024, at the professor's invitation, I became his research assistant, assisting him in creating a music program on the music programming software Max that uses user gestures to train and generate music motifs. Throughout my studies, I continued to take French classes offered by the university, solidifying my interest in languages. Therefore, I actively sought opportunities to study in French-speaking regions. Because of this exchange application, French studies unexpectedly became my second major.
+During this timel, I had the opportunity to participate in exchange programs at the DIS Program in Copenhagen, Denmark, and the University of Geneva, Switzerland, which broadened my international perspective and solidified my interest in French. 
+  Upon returning to the US, I continued to improve my French and obtained the highest level (C2) certificate in European Language Framework by the end of 2025. 
+  </p>
+
 
 <style>
   /* ============================
@@ -170,5 +174,11 @@
     margin: 0;
     color: #555;
     font-size: 0.95rem;
+  }
+
+  p {
+    margin: 1rem 0;
+    line-height: 1.6;
+    color: #555;
   }
 </style>

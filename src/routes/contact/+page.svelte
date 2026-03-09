@@ -60,22 +60,6 @@
 </section>
 
 
-
-<section class="quick-links">
-  <h2>Explore</h2>
-  <div class="card-row">
-    <!--
-      These are simple "cards" linking to your other pages.
-      Each one is just an <a> tag styled as a box.
-      Add more cards as you add more pages to your site!
-    -->
-    <a href="/about" class="card">
-      <h3>About Me</h3>
-      <p>My background, interests, and goals.</p>
-    </a>
-  </div>
-</section>
-
 <style>
   /* ============================
      HOME PAGE STYLES
