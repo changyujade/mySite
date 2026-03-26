@@ -48,6 +48,7 @@
 			<a href="/contact">contact</a>
 			<a href="/">Home</a>
 			<a href="/about">About</a>
+			<a href="/cv.pdf" target="_blank">CV</a>
 			<a href="/projects">Projects</a>
 			<a href="/weather">Weather</a>
 		</div>
