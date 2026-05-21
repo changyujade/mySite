@@ -1,216 +1,232 @@
-<!--
-  +page.svelte — Your HOME PAGE (the root route: /)
-  
-  This is what visitors see first. It should introduce YOU
-  and give people a reason to explore the rest of your site.
-
-  KEY SVELTE 5 CONCEPTS USED HERE:
-  - $state()  → creates a reactive variable (updates the page when it changes)
-  - {variable} → displays a variable's value in HTML (like f-strings in Python)
-  - onclick    → runs a function when something is clicked
-
-  CUSTOMIZE: Replace ALL the placeholder text with your own content!
--->
 <script>
-
-
-
-  // ============================================
-  // REACTIVE STATE — $state() makes variables "live"
-  // ============================================
-  // When these change, the HTML updates AUTOMATICALLY.
-  // No document.getElementById needed!
-  // Python comparison: imagine if changing a variable
-  // instantly updated every print() that used it.
-
-  let greeting = $state("Welcome to my site!");
-  let showBio = $state(false);
-
-  // A regular variable (not reactive — fine for static data)
-  const name = "Jade Chang";
-  const tagline = "Student · Developer · Interdisciplinary Researcher";
-
-  // ============================================
-  // FUNCTIONS — same as JavaScript, but Svelte
-  // re-renders automatically when $state changes
-  // ============================================
-  function toggleBio() {
-    // This ONE LINE updates the variable AND the page.
-    // In vanilla JS you'd also need:
-    //   document.getElementById('bio').style.display = ...
-    //   document.getElementById('btn').textContent = ...
-    // Svelte handles all of that for you.
-    showBio = !showBio;
-  }
+	const benefits = [
+		{
+			title: 'Turn complex culture into readable evidence',
+			copy:
+				'I use computational methods to surface patterns in language, music, and digital communities without flattening the human questions behind them.'
+		},
+		{
+			title: 'Build research that people can actually use',
+			copy:
+				'From misogyny analysis to jazz-learning tools, my work focuses on interfaces and explanations that make analysis approachable.'
+		},
+		{
+			title: 'Move fluently across disciplines',
+			copy:
+				'Computer science, French and Francophone studies, music, and digital humanities shape how I ask questions and build answers.'
+		}
+	];
 </script>
 
-<section class="hero">
-  <!-- {variable} inserts the value — like Python's f"{variable}" -->
-  <h1>{greeting}</h1>
-  <p class="name">{name}</p>
-  <p class="tagline">{tagline}</p>
+<div class="landing-shell">
+	<section class="landing-hero">
+		<div class="hero-copy">
+			<h2>Yu-Chieh Jade Chang</h2>
+			<a class="headline-link" href="/about" aria-label="Go to About page">
+				<h1>Research-minded digital work for culture, language, and sound.</h1>
+			</a>
+			<p class="value-prop">
+				I build clear, thoughtful digital projects that help people understand complex
+				cultural patterns through code, design, and humanistic interpretation.
+			</p>
+			<div class="button-row">
+				<a class="button" href="/projects">Explore Projects</a>
+				<a class="button secondary" href="/about">Meet Jade</a>
+			</div>
+		</div>
 
-  <!--
-    BUTTON with onclick
-    When clicked, toggleBio() runs → showBio changes →
-    the {#if} block below updates automatically
-  -->
-  <button onclick={toggleBio}>
-    {showBio ? "Hide Bio" : "Read More About Me"}
-  </button>
-</section>
+		<a class="name-mark" href="/about" aria-label="Go to About page">
+			<span>Jade</span>
+			<span>Chang</span>
+		</a>
+	</section>
 
-<!--
-  CONDITIONAL RENDERING: {#if ...}
-  This block only shows when showBio is true.
-  Python comparison: like an if statement, but for HTML.
-  
-  In vanilla JS you'd use:
-    element.style.display = showBio ? 'block' : 'none';
-  In Svelte, the HTML literally appears/disappears.
--->
-{#if showBio}
-  <section class="bio-section">
-    <h2>A Little About Me</h2>
-    <p>
-      <!-- CUSTOMIZE: Write 2-3 sentences about yourself -->
-      I'm a student at the University of Chicago studying Digital Studies of Language, History, and Culture.
-      I am a cross-disciplinary digital specialist in the humanities and technology, with C2-level French proficiency and strong interdisciplinary digital competencies. Skilled in integrating language, music, and computational logic, with a high sense of responsibility and the ability to accurately identify and solve problems in complex and evolving technical environments.
-    </p>
-  </section>
-{/if}
+	<section class="benefit-grid" aria-label="Reasons to explore this site">
+		{#each benefits as benefit}
+			<a class="surface-card benefit-card" href="/projects">
+				<h2>{benefit.title}</h2>
+				<p>{benefit.copy}</p>
+			</a>
+		{/each}
+	</section>
 
-<section class="quick-links">
-  <h2 class ="text-xl font-bold mb-4">Explore My Work</h2>
-  <div class="card-row">
-    <!--
-      These are simple "cards" linking to your other pages.
-      Each one is just an <a> tag styled as a box.
-      Add more cards as you add more pages to your site!
-    -->
-    <a href="https://medium.com/@chang.j0918" class="card">
-      <h3>My Words</h3>
-      <p>I enjoy writing and sharing my thoughts on various topics. This medium site hosts my writings in French.</p>
-    </a>
-    <a href="/projects" class="card">
-      <h3>Projects</h3>
-      <p>Work I've done in this course and beyond.</p>
-    </a>
-  </div>
-</section>
-
-<section>
-  <l> </l>
-  <h2 class ="text-xl font-bold mb-4">About this Site</h2>
-  <p class = "text-gray-600 mb-4">
-    This site is built with SvelteKit, a modern web framework that makes it easy to create fast, interactive websites. 
-    It uses Tailwind CSS for styling and MapLibre for interactive maps. 
-    The weather data is fetched from the Open-Meteo API.
-    SoundCloud is used to embed my music tracks directly on the site.
-  </p>
-  <h2 class="text-xl font-bold mb-2">APIs used</h2>
-  <ul class="list-disc list-inside mb-4">
-    <li><a href="https://open-meteo.com/" class="text-blue-500 hover:underline">Open-Meteo API</a> for weather data.</li>
-    <li><a href="https://maplibre.org/" class="text-blue-500 hover:underline">MapLibre</a> for interactive maps.</li>
-    <li><a href="https://soundcloud.com/" class="text-blue-500 hover:underline">SoundCloud</a> for embedding music tracks.</li>
-  </ul>
-</section>
+	<section class="site-cta">
+		<div>
+			<h2>Start with the work. Stay for the method.</h2>
+			<p>
+				See how technical systems, multilingual research, and cultural analysis come
+				together across the portfolio.
+			</p>
+		</div>
+		<a class="button" href="/projects">Read the Portfolio</a>
+	</section>
+</div>
 
 <style>
-  /* ============================
-     HOME PAGE STYLES
-     
-     All styles here are SCOPED to this page only.
-     They won't affect other pages. This is a Svelte
-     feature — no class name collisions!
-     ============================ */
+	.landing-shell {
+		display: grid;
+		gap: 34px;
+		animation: page-in 560ms ease both;
+	}
 
-  .hero {
-    text-align: center;
-    padding: 3rem 0 2rem;
-  }
+	.landing-hero {
+		display: grid;
+		grid-template-columns: minmax(300px, 0.9fr) minmax(320px, 1.1fr);
+		gap: clamp(28px, 5vw, 64px);
+		align-items: center;
+		min-height: calc(100vh - 210px);
+		padding: clamp(28px, 5vw, 56px) 0;
+	}
 
-  .hero h1 {
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-  }
+	.hero-copy {
+		display: grid;
+		align-content: center;
+	}
 
-  .name {
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin: 0.25rem 0;
-  }
+	.hero-copy h1 {
+		max-width: 720px;
+		font-size: clamp(3rem, 7vw, 6.9rem);
+		line-height: 0.94;
+	}
 
-  .tagline {
-    color: #666;
-    font-style: italic;
-    margin-bottom: 1.5rem;
-  }
+	.headline-link {
+		display: block;
+		color: #000000;
+		transition:
+			transform 220ms ease,
+			text-shadow 220ms ease;
+	}
 
-  button {
-    background-color: #f8a484;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: inherit;
-  }
+	.headline-link:hover {
+		transform: translateY(-4px);
+		text-shadow: 0 18px 54px rgba(0, 0, 0, 0.16);
+	}
 
-  button:hover {
-    background-color: #dfcaba;
-  }
+	.value-prop {
+		max-width: 620px;
+		margin: 26px 0 0;
+		color: #000000;
+		font-family: var(--font-reading);
+		font-size: clamp(1.1rem, 2vw, 1.42rem);
+		line-height: 1.68;
+	}
 
-  /* Bio section — appears when showBio is true */
-  .bio-section {
-    background-color: #f5f0eb;
-    padding: 1.5rem 2rem;
-    border-radius: 6px;
-    margin: 1.5rem 0;
-    border-left: 4px solid #f8a484;
-  }
+	.name-mark {
+		position: relative;
+		display: grid;
+		justify-self: end;
+		color: #000000;
+		font-family: var(--font-heading);
+		font-size: clamp(4.5rem, 13vw, 12rem);
+		font-weight: 800;
+		line-height: 0.82;
+		text-align: right;
+		transition:
+			transform 320ms ease,
+			text-shadow 320ms ease;
+	}
 
-  .bio-section h2 {
-    margin-top: 0;
-  }
+	.name-mark::before,
+	.name-mark::after {
+		content: 'Jade Chang';
+		position: absolute;
+		inset: 50% 0 auto auto;
+		transform: translateY(-50%);
+		opacity: 0;
+		pointer-events: none;
+		line-height: 0.82;
+		transition:
+			opacity 220ms ease,
+			transform 320ms ease;
+	}
 
-  /* Card links */
-  .quick-links {
-    margin-top: 2.5rem;
-  }
+	.name-mark::before {
+		color: #8ee3d0;
+		z-index: -1;
+	}
 
-  .card-row {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
+	.name-mark::after {
+		color: #f1c27d;
+		z-index: -2;
+	}
 
-  .card {
-    flex: 1;
-    min-width: 200px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 1.5rem;
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow 0.2s;
-  }
+	.name-mark:hover {
+		transform: translateY(-8px) scale(1.015);
+		text-shadow: 0 26px 80px rgba(142, 227, 208, 0.28);
+	}
 
-  .card:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    text-decoration: none;
-  }
+	.name-mark:hover::before {
+		opacity: 0.72;
+		transform: translate(-12px, calc(-50% + 10px));
+	}
 
-  .card h3 {
-    margin: 0 0 0.5rem;
-    color: #f8a484;
-  }
+	.name-mark:hover::after {
+		opacity: 0.46;
+		transform: translate(14px, calc(-50% - 12px));
+	}
 
-  .card p {
-    margin: 0;
-    color: #555;
-    font-size: 0.95rem;
-  }
+	.name-mark span {
+		display: block;
+	}
+
+	.benefit-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 16px;
+	}
+
+	.benefit-card h2 {
+		font-size: clamp(1.35rem, 2.3vw, 2.05rem);
+	}
+
+	.benefit-card {
+		border: 0;
+		background: transparent;
+		box-shadow: none;
+		padding-inline: 0;
+	}
+
+	.benefit-card:hover {
+		transform: translateY(-3px);
+		background: transparent;
+		box-shadow: none;
+	}
+
+	.site-cta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		padding: clamp(22px, 4vw, 34px);
+	}
+
+	.site-cta h2 {
+		font-size: clamp(1.8rem, 3vw, 3rem);
+	}
+
+	.site-cta p {
+		max-width: 620px;
+		margin: 14px 0 0;
+		color: #000000;
+		font-family: var(--font-reading);
+		font-size: 1.08rem;
+		line-height: 1.65;
+	}
+
+	@media (max-width: 900px) {
+		.landing-hero,
+		.benefit-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.name-mark {
+			justify-self: start;
+			text-align: left;
+		}
+
+		.site-cta {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
 </style>

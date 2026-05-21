@@ -1,210 +1,165 @@
-<!--
-  +page.svelte — Your HOME PAGE (the root route: /)
-  
-  This is what visitors see first. It should introduce YOU
-  and give people a reason to explore the rest of your site.
-
-  KEY SVELTE 5 CONCEPTS USED HERE:
-  - $state()  → creates a reactive variable (updates the page when it changes)
-  - {variable} → displays a variable's value in HTML (like f-strings in Python)
-  - onclick    → runs a function when something is clicked
-
-  CUSTOMIZE: Replace ALL the placeholder text with your own content!
--->
 <script>
-  // ============================================
-  // REACTIVE STATE — $state() makes variables "live"
-  // ============================================
-  // When these change, the HTML updates AUTOMATICALLY.
-  // No document.getElementById needed!
-  // Python comparison: imagine if changing a variable
-  // instantly updated every print() that used it.
+	const profileUrl =
+		'https://soundcloud.com/user-929081810?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing';
+	const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(profileUrl)}&visual=true`;
 
-  let projects = $state("My Projects:");
-  let showBio = $state(false);
-  const spotifyProfileUrl = "https://open.spotify.com/user/YOUR_SPOTIFY_USER_ID";
-
-  
-  const profileUrl = "https://soundcloud.com/user-929081810?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing";
-  const embedUrl = `https://w.soundcloud.com/player/?url=${encodeURIComponent(profileUrl)}&visual=true`;
-
-  // A regular variable (not reactive — fine for static data)
-
-
-  // ============================================
-  // FUNCTIONS — same as JavaScript, but Svelte
-  // re-renders automatically when $state changes
-  // ============================================
-  function toggleBio() {
-    // This ONE LINE updates the variable AND the page.
-    // In vanilla JS you'd also need:
-    //   document.getElementById('bio').style.display = ...
-    //   document.getElementById('btn').textContent = ...
-    // Svelte handles all of that for you.
-    showBio = !showBio;
-  }
+	const projects = [
+		{
+			title: 'Misogyny Analysis on Threads',
+			type: 'Digital humanities · Social media analysis',
+			status: 'In progress',
+			copy:
+				'An analysis project examining misogynistic language, social patterns, and platform-specific discourse on Threads. The work brings together computational text analysis, interpretive humanities methods, and visual summaries that make harmful language patterns easier to investigate.',
+			tags: ['NLP', 'social media', 'discourse analysis', 'ethics'],
+			featured: true
+		},
+		{
+			title: 'Jazz Analyzer',
+			type: 'Music technology · Capstone',
+			status: 'Built',
+			href: 'https://github.com/changyujade/jazz-analyzer',
+			copy:
+				'A web tool for beginning jazz learners that parses chord data, normalizes songs into Roman numeral notation, identifies progressions, and explains chord functions with scale suggestions.',
+			tags: ['Python', 'music theory', 'education', 'UX']
+		},
+		{
+			title: 'Gesture-Based Motif Research',
+			type: 'Research assistantship',
+			status: '2024',
+			copy:
+				'A music technology research project using machine learning tools in Max to train and generate variations of musical motifs from user gestures.',
+			tags: ['Max', 'machine learning', 'music', 'interaction']
+		}
+	];
 </script>
 
-<section class="hero">
-  <!-- {variable} inserts the value — like Python's f"{variable}" -->
-  <h1>{projects}</h1>
+<div class="page-shell">
+	<section class="hero-panel hero-grid">
+		<div>
+			<h2>Projects</h2>
+			<h1>Research that becomes usable systems.</h1>
+			<p class="lead">
+				Explore projects that transform complex cultural and musical questions into
+				readable evidence, usable interfaces, and research people can act on.
+			</p>
+			<div class="button-row">
+				<a class="button" href="#project-list">View Featured Work</a>
+				<a class="button secondary" href="/contact">Collaborate</a>
+			</div>
+		</div>
+	</section>
 
-  <!--
-    BUTTON with onclick
-    When clicked, toggleBio() runs → showBio changes →
-    the {#if} block below updates automatically
-  -->
-</section>
+	<section class="project-list" id="project-list">
+		{#each projects as project}
+			<article class:featured={project.featured} class="project">
+				<div>
+					<p class="project-type">{project.type}</p>
+					<h2>{project.title}</h2>
+					<p>{project.copy}</p>
+					<div class="meta">
+						<span class="pill">{project.status}</span>
+						{#each project.tags as tag}
+							<span class="pill">{tag}</span>
+						{/each}
+					</div>
+				</div>
+				{#if project.href}
+					<a class="button secondary" href={project.href} target="_blank" rel="noreferrer">GitHub</a>
+				{/if}
+			</article>
+		{/each}
+	</section>
 
+	<section>
+		<div class="section-head">
+			<div>
+				<h2>Music</h2>
+				<h2>Original SoundCloud work</h2>
+			</div>
+			<p>Music remains part of my technical and research practice.</p>
+		</div>
 
-
-
-
-<section class="quick-links">
-  <h2>Explore</h2>
-  <div class="card-row">
-    <!--
-      These are simple "cards" linking to your other pages.
-      Each one is just an <a> tag styled as a box.
-      Add more cards as you add more pages to your site!
-    -->
-    <a href="/about" class="card card-social">
-      <h3>Project on social media analysis</h3>
-      <p>Currently in progress. Analysing misogyny in social media content, in particular the platform "threads"</p>
-    </a>
-
-  
-    <div class="card">
-      <h3>My SoundCloud Track</h3>
-      <p>These are the original music that I've made in the past. Listen to it on SoundCloud!</p>
-      <iframe
-        width="100%"
-        height="300"
-        allow="autoplay"
-        src={embedUrl}
-        title="SoundCloud player"
-      ></iframe>
-    </div>
-
-    <a href="https://github.com/changyujade/jazz-analyzer" class="card card-jazz">
-      <h3>jazz-analyzer</h3>
-      <p>This is my project on jazz analysis. For my senior-year capstone project, I built a jazz analyzer website. The goal of this project was to help beginners learn jazz theory. I parsed chord data from plain text files into Python and normalized songs in different keys into Roman numeral notation (I–VII), allowing the program to analyze chord functions automatically. This made it possible to identify different chord patterns. When users move their cursor over a detected chord progression, they can learn about the function of each chord in the song and receive suggestions for appropriate scales to play over the progression. I invited music majors and professors to test the program and used their feedback to improve both the system and its usability. This project demonstrates my ability to use technology to address the needs and challenges faced by beginners in jazz music. Click to goto the github repository </p>
-    </a>
-    
-  </div>
-</section>
+		<div class="player-shell">
+			<iframe
+				width="100%"
+				height="300"
+				allow="autoplay"
+				src={embedUrl}
+				title="SoundCloud player"
+			></iframe>
+		</div>
+	</section>
+</div>
 
 <style>
-  /* ============================
-     HOME PAGE STYLES
-     
-     All styles here are SCOPED to this page only.
-     They won't affect other pages. This is a Svelte
-     feature — no class name collisions!
-     ============================ */
+	.project-list {
+		display: grid;
+		gap: clamp(34px, 6vw, 72px);
+	}
 
-  .hero {
-    text-align: center;
-    padding: 3rem 0 2rem;
-  }
+	.project {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: clamp(24px, 5vw, 60px);
+		align-items: start;
+		border: 0;
+		border-top: 1px solid #000000;
+		border-radius: 0;
+		padding: clamp(42px, 7vw, 86px) 0;
+		background: transparent;
+		box-shadow: none;
+		transition:
+			transform 220ms ease,
+			background 220ms ease,
+			border-color 220ms ease;
+	}
 
-  .hero h1 {
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-  }
+	.project:hover {
+		transform: translateY(-3px);
+		border-color: #000000;
+		background: transparent;
+	}
 
-  .name {
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin: 0.25rem 0;
-  }
+	.project.featured {
+		background: transparent;
+	}
 
-  .tagline {
-    color: #666;
-    font-style: italic;
-    margin-bottom: 1.5rem;
-  }
+	.project p {
+		max-width: 820px;
+		margin: 24px 0 0;
+	}
 
-  button {
-    background-color: #8b0000;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: inherit;
-  }
+	.project h2 {
+		max-width: 900px;
+		font-size: clamp(2.25rem, 5vw, 4.8rem);
+	}
 
-  button:hover {
-    background-color: #6b0000;
-  }
+	.project-type {
+		margin: 0 0 18px !important;
+		font-size: 0.88rem;
+		font-weight: 850;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
 
-  /* Bio section — appears when showBio is true */
-  .bio-section {
-    background-color: #f5f0eb;
-    padding: 1.5rem 2rem;
-    border-radius: 6px;
-    margin: 1.5rem 0;
-    border-left: 4px solid #8b0000;
-  }
+	.player-shell {
+		overflow: hidden;
+		border: 0;
+		border-top: 1px solid #000000;
+		border-radius: 0;
+		background: transparent;
+		box-shadow: none;
+		padding-top: 18px;
+	}
 
-  .bio-section h2 {
-    margin-top: 0;
-  }
+	iframe {
+		display: block;
+		border: 0;
+	}
 
-  /* Card links */
-  .quick-links {
-    margin-top: 2.5rem;
-  }
-
-  .card-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 1.5rem;
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow 0.2s;
-  }
-
-  .card:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    text-decoration: none;
-  }
-
-  .card h3 {
-    margin: 0 0 0.5rem;
-    color: #f8a484;
-  }
-
-  .card p {
-    margin: 0;
-    color: #555;
-    font-size: 0.95rem;
-  }
-
-  @media (min-width: 900px) {
-    .card-social {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .card-spotify {
-      grid-column: 1;
-      grid-row: 2;
-    }
-
-    .card-jazz {
-      grid-column: 2;
-      grid-row: 1 / span 2;
-    }
-  }
+	@media (max-width: 760px) {
+		.project {
+			grid-template-columns: 1fr;
+		}
+	}
 </style>
-

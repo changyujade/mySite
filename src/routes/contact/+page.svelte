@@ -1,152 +1,214 @@
-<!--
-  +page.svelte — Your HOME PAGE (the root route: /)
-  
-  This is what visitors see first. It should introduce YOU
-  and give people a reason to explore the rest of your site.
-
-  KEY SVELTE 5 CONCEPTS USED HERE:
-  - $state()  → creates a reactive variable (updates the page when it changes)
-  - {variable} → displays a variable's value in HTML (like f-strings in Python)
-  - onclick    → runs a function when something is clicked
-
-  CUSTOMIZE: Replace ALL the placeholder text with your own content!
--->
 <script>
-  // ============================================
-  // REACTIVE STATE — $state() makes variables "live"
-  // ============================================
-  // When these change, the HTML updates AUTOMATICALLY.
-  // No document.getElementById needed!
-  // Python comparison: imagine if changing a variable
-  // instantly updated every print() that used it.
+	import { Github, Linkedin, Mail, Phone } from '@lucide/svelte';
 
-  let contact = $state("Contact me:");
-  let showBio = $state(false);
-
-  // A regular variable (not reactive — fine for static data)
-  const name = "Jade Chang";
-  const tagline = "Student · Developer · [Your Interest]";
-
-  // ============================================
-  // FUNCTIONS — same as JavaScript, but Svelte
-  // re-renders automatically when $state changes
-  // ============================================
-  function toggleBio() {
-    // This ONE LINE updates the variable AND the page.
-    // In vanilla JS you'd also need:
-    //   document.getElementById('bio').style.display = ...
-    //   document.getElementById('btn').textContent = ...
-    // Svelte handles all of that for you.
-    showBio = !showBio;
-  }
+	const links = [
+		{ label: 'Email', value: 'jadechang@uchicago.edu', href: 'mailto:jadechang@uchicago.edu', icon: Mail },
+		{ label: 'Phone', value: '207-855-1579', href: 'tel:2078551579', icon: Phone },
+		{
+			label: 'LinkedIn',
+			value: 'jade-c-4ab612138',
+			href: 'https://www.linkedin.com/in/jade-c-4ab612138/',
+			icon: Linkedin
+		},
+		{ label: 'GitHub', value: 'changyujade', href: 'https://github.com/changyujade', icon: Github }
+	];
 </script>
 
-<section class="hero">
-  <!-- {variable} inserts the value — like Python's f"{variable}" -->
-  <h1>{contact}</h1>
+<div class="page-shell">
+	<section class="business-card" aria-label="Jade Chang contact card">
+		<div class="card-top">
+			<div>
+				<p class="card-kicker">Yu-Chieh Jade Chang</p>
+				<h2>Digital Studies · Language · Music Technology</h2>
+			</div>
+			<!-- <div class="monogram">JC</div> -->
+			<img src="/jade.jpeg" alt="Jade Chang" class="square-image" />
+		</div>
 
-  <!--
-    BUTTON with onclick
-    When clicked, toggleBio() runs → showBio changes →
-    the {#if} block below updates automatically
-  -->
-</section>
+		<p class="card-note">
+			University of Chicago researcher working across computational culture, multilingual
+			study, and creative technical systems.
+		</p>
 
-<section class="h1">
-  <p>Contact me at: jade.chang@uchicago.edu </p>
-  <p>Phone: 207-855-1579 </p>
-  <p>Link to my <a href="https://www.linkedin.com/in/jade-c-4ab612138/" target="_blank"> LinkedIn </a></p>
-  <p>Link to my <a href="https://github.com/changyujade" target="_blank"> GitHub </a></p>
-</section>
-
+		<div class="contact-infographic" aria-label="Contact options">
+			{#each links as item}
+				{@const Icon = item.icon}
+				<a
+					class="contact-node"
+					href={item.href}
+					target={item.href.startsWith('http') ? '_blank' : undefined}
+				>
+					<span class="node-icon" aria-hidden="true"><Icon size={34} strokeWidth={1.8} /></span>
+					<span class="node-label">{item.label}</span>
+					<strong>{item.value}</strong>
+				</a>
+			{/each}
+		</div>
+	</section>
+</div>
 
 <style>
-  /* ============================
-     HOME PAGE STYLES
-     
-     All styles here are SCOPED to this page only.
-     They won't affect other pages. This is a Svelte
-     feature — no class name collisions!
-     ============================ */
+	.business-card {
+		position: relative;
+		overflow: hidden;
+		border: 0;
+		border-top: 1px solid #000000;
+		border-radius: 0;
+		padding: clamp(44px, 7vw, 88px) 0;
+		background: transparent;
+		color: #000000;
+		box-shadow: none;
+	}
 
-  .hero {
-    text-align: center;
-    padding: 3rem 0 2rem;
-  }
+	.business-card::after {
+		content: '';
+		position: absolute;
+		right: -80px;
+		bottom: -80px;
+		width: 220px;
+		height: 220px;
+		border: 1px solid #000000;
+		border-radius: 999px;
+		opacity: 0.12;
+	}
 
-  .hero h1 {
-    font-size: 2.2rem;
-    margin-bottom: 0.5rem;
-  }
+	.card-top {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		align-items: start;
+		justify-content: space-between;
+		gap: clamp(34px, 6vw, 72px);
+	}
 
-  .name {
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin: 0.25rem 0;
-  }
+	.card-kicker {
+		margin: 0 0 12px;
+		font-family: var(--font-heading);
+		font-size: clamp(1rem, 2vw, 1.4rem);
+		font-weight: 850;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
 
-  .tagline {
-    color: #666;
-    font-style: italic;
-    margin-bottom: 1.5rem;
-  }
+	.business-card h2 {
+		max-width: 720px;
+		color: #000000;
+		font-size: clamp(2rem, 5vw, 4.2rem);
+		line-height: 0.98;
+	}
 
-  button {
-    background-color: #8b0000;
-    color: white;
-    border: none;
-    padding: 0.6rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-family: inherit;
-  }
+	.monogram {
+		display: grid;
+		width: clamp(86px, 12vw, 140px);
+		aspect-ratio: 1;
+		place-items: center;
+		border: 1px solid #000000;
+		border-radius: 0;
+		font-family: var(--font-heading);
+		font-size: clamp(1.6rem, 3vw, 3rem);
+		font-weight: 900;
+		flex: 0 0 auto;
+	}
 
-  button:hover {
-    background-color: #6b0000;
-  }
+	.card-note {
+		position: relative;
+		z-index: 1;
+		max-width: 660px;
+		margin: 34px 0;
+		color: #000000;
+		font-size: 1.16rem;
+		line-height: 1.65;
+	}
 
+	.contact-infographic {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: clamp(18px, 3vw, 34px);
+		margin-top: 48px;
+	}
 
-  .bio-section h2 {
-    margin-top: 0;
-  }
+	.contact-node {
+		position: relative;
+		display: grid;
+		align-content: space-between;
+		min-height: 260px;
+		border-top: 2px solid #000000;
+		padding: 18px 0 0;
+		color: #000000;
+		transition:
+			transform 220ms ease,
+			text-shadow 220ms ease;
+	}
 
-  /* Card links */
-  .quick-links {
-    margin-top: 2.5rem;
-  }
+	.contact-node::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: -2px;
+		width: 0;
+		height: 2px;
+		background: #8ee3d0;
+		box-shadow: 18px -6px 0 #f1c27d;
+		transition: width 220ms ease;
+	}
 
-  .card-row {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
+	.contact-node:hover {
+		transform: translateY(-6px);
+		text-shadow:
+			-0.05em 0.04em 0 #8ee3d0,
+			0.05em -0.04em 0 #f1c27d;
+	}
 
-  .card {
-    flex: 1;
-    min-width: 200px;
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    padding: 1.5rem;
-    text-decoration: none;
-    color: inherit;
-    transition: box-shadow 0.2s;
-  }
+	.contact-node:hover::after {
+		width: 100%;
+	}
 
-  .card:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-    text-decoration: none;
-  }
+	.node-label {
+		font-family: var(--font-heading);
+		font-weight: 850;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
 
-  .card h3 {
-    margin: 0 0 0.5rem;
-    color: #8b0000;
-  }
+	.node-icon {
+		display: grid;
+		width: clamp(64px, 8vw, 96px);
+		aspect-ratio: 1;
+		place-items: center;
+		margin: 16px 0 42px;
+		border: 1px solid #000000;
+	}
 
-  .card p {
-    margin: 0;
-    color: #555;
-    font-size: 0.95rem;
-  }
+	.node-label {
+		font-size: clamp(1.25rem, 2.4vw, 2rem);
+		line-height: 0.95;
+	}
+
+	.contact-node strong {
+		overflow-wrap: anywhere;
+		margin-top: 14px;
+		font-size: clamp(0.98rem, 1.5vw, 1.2rem);
+		font-weight: 600;
+	}
+
+	@media (max-width: 680px) {
+		.card-top {
+			display: grid;
+		}
+
+		.contact-infographic {
+			grid-template-columns: 1fr;
+		}
+
+		.contact-node {
+			min-height: auto;
+			gap: 14px;
+		}
+
+		.node-icon {
+			margin: 12px 0;
+		}
+	}
 </style>

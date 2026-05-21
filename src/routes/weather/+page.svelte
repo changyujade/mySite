@@ -17,7 +17,7 @@
   let avgHigh = $derived(
     weatherData?.daily?.temperature_2m_max?.length
       ? Math.round(
-          weatherData.daily.temperature_2m_max.reduce((sum, t) => sum + t, 0) /
+          weatherData.daily.temperature_2m_max.reduce((/** @type {number} */ sum, /** @type {number} */ t) => sum + t, 0) /
             weatherData.daily.temperature_2m_max.length
         )
       : null
@@ -52,7 +52,7 @@
     95: "Thunderstorm"
   });
 
-  function getWeatherIcon(code) {
+  function getWeatherIcon(/** @type {number} */ code) {
     // OpenWeather icon set used as lightweight visual badges.
     if ([0, 1].includes(code)) return "https://openweathermap.org/img/wn/01d@2x.png";
     if ([2].includes(code)) return "https://openweathermap.org/img/wn/02d@2x.png";
@@ -107,55 +107,193 @@
   }
 </script>
 
-<h1 class="text-3xl font-bold mb-4">Current Weather</h1>
+<div class="page-shell">
+  <section class="hero-panel weather-hero">
+    <div>
+      <h2>Weather Tool</h2>
+      <h1>Current Weather</h1>
+      <p class="lead">
+        A compact weather interface that turns live forecast data into an immediate, readable city snapshot.
+      </p>
+    </div>
 
-<form class="flex gap-2 mb-6" onsubmit={(e) => { e.preventDefault(); searchCity(); }}>
-  <Input placeholder="Enter a city..." bind:value={city} />
-  <Button type="submit" variant="outline" class="bg-[#f8a484] text-[#fdfcfa]">
-    Search
-  </Button>
-</form>
+    <form class="search-panel" onsubmit={(e) => { e.preventDefault(); searchCity(); }}>
+      <Input placeholder="Enter a city..." bind:value={city} class="weather-input" />
+      <Button type="submit" variant="outline" class="weather-button">
+        {loading ? "Searching..." : "Search"}
+      </Button>
+    </form>
+  </section>
 
-{#if loading}
-  <p>Loading...</p>
-{/if}
+  {#if loading}
+    <p class="status">Loading weather data...</p>
+  {/if}
 
-{#if errorMsg}
-  <p class="text-red-500 mb-4">{errorMsg}</p>
-{/if}
+  {#if errorMsg}
+    <p class="status error">{errorMsg}</p>
+  {/if}
 
-{#if weatherData}
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start mb-6">
-    <Card.Root class="w-full bg-white rounded shadow">
-      <Card.Header class="p-4 border-b">
-        <div class="flex items-center justify-between gap-3">
+  {#if weatherData}
+    <section class="weather-grid">
+      <Card.Root class="weather-card">
+        <Card.Header class="weather-card-header">
           <div>
-            <Card.Title class="text-xl font-semibold">{weatherData.cityName}</Card.Title>
-            <Card.Description class="text-sm text-gray-500">Current Conditions</Card.Description>
+            <Card.Title class="weather-title">{weatherData.cityName}</Card.Title>
+            <Card.Description class="weather-description">Current Conditions</Card.Description>
           </div>
           <img
             src={getWeatherIcon(weatherData.current.weather_code)}
             alt={weatherDescriptions[weatherData.current.weather_code] || "Weather icon"}
-            class="h-32 w-32 md:h-32 md:w-32 shrink-0"
+            class="weather-icon"
           />
-        </div>
-      </Card.Header>
-      <Card.Content class="p-4 space-y-2">
-        <p class="text-3xl font-bold">{weatherData.current.temperature_2m} C</p>
-        <p>Condition: {weatherDescriptions[weatherData.current.weather_code] || "Unknown"}</p>
-        <p>Wind Speed: {weatherData.current.wind_speed_10m} mph</p>
-      </Card.Content>
-    </Card.Root>
+        </Card.Header>
+        <Card.Content class="weather-content">
+          <p class="temperature">{weatherData.current.temperature_2m} C</p>
+          <p>Condition: {weatherDescriptions[weatherData.current.weather_code] || "Unknown"}</p>
+          <p>Wind Speed: {weatherData.current.wind_speed_10m} mph</p>
+          {#if avgHigh !== null}
+            <p class="avg">7-day avg high: {avgHigh} C</p>
+          {/if}
+        </Card.Content>
+      </Card.Root>
 
-    <WeatherMap lon={mapLon} lat={mapLat} />
-  </div>
+      <div class="map-shell">
+        <WeatherMap lon={mapLon} lat={mapLat} />
+      </div>
+    </section>
 
-  <ForeCastTable forecast={weatherData.daily} />
-{/if}
+    <section class="forecast-shell">
+      <ForeCastTable forecast={weatherData.daily} />
+    </section>
+  {/if}
+</div>
 
-{#if avgHigh !== null}
-  <hr class="my-4 border-t border-gray-300" />
-  <p class="text-lg font-semibold">
-    7-day avg high: {avgHigh}C
-  </p>
-{/if}
+<style>
+  .weather-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+    gap: clamp(34px, 6vw, 72px);
+    align-items: end;
+  }
+
+  .search-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px;
+    border: 0;
+    border-top: 1px solid #000000;
+    border-radius: 0;
+    padding: 28px 0 0;
+    background: transparent;
+  }
+
+  :global(.weather-input) {
+    min-height: 44px;
+    border-color: #000000 !important;
+    background: transparent !important;
+    color: var(--text) !important;
+  }
+
+  :global(.weather-input::placeholder) {
+    color: var(--soft) !important;
+  }
+
+  :global(.weather-button) {
+    min-height: 44px;
+    border-color: rgba(0, 0, 0, 0.35) !important;
+    background: transparent !important;
+    color: var(--text) !important;
+  }
+
+  .status {
+    margin: 0;
+    color: var(--soft);
+  }
+
+  .error {
+    color: var(--text);
+    text-decoration: underline;
+  }
+
+  .weather-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+    gap: clamp(34px, 6vw, 72px);
+    align-items: stretch;
+  }
+
+  :global(.weather-card),
+  .map-shell,
+  .forecast-shell {
+    overflow: hidden;
+    border: 0 !important;
+    border-top: 1px solid #000000 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--text) !important;
+    box-shadow: none;
+  }
+
+  :global(.weather-card-header) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border-bottom: 1px solid var(--line);
+    padding: 22px !important;
+  }
+
+  :global(.weather-title) {
+    color: var(--text);
+    font-size: clamp(2rem, 4vw, 4rem);
+    font-family: var(--font-heading);
+    line-height: 0.95;
+  }
+
+  :global(.weather-description) {
+    color: var(--soft);
+  }
+
+  .weather-icon {
+    width: 112px;
+    height: 112px;
+    filter: drop-shadow(0 12px 26px rgba(0, 0, 0, 0.28));
+  }
+
+  :global(.weather-content) {
+    padding: 22px !important;
+    color: var(--soft);
+  }
+
+  .temperature {
+    margin: 0 0 12px;
+    color: var(--accent);
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 850;
+    line-height: 0.9;
+    font-family: var(--font-heading);
+  }
+
+  .avg {
+    margin-top: 18px;
+    color: var(--accent-strong);
+    font-weight: 800;
+  }
+
+  .forecast-shell {
+    padding: 8px;
+  }
+
+  @media (max-width: 860px) {
+    .weather-hero,
+    .weather-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .search-panel {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
