@@ -11,7 +11,8 @@
 		{ href: '/projects', label: 'Projects' },
 		{ href: '/weather', label: 'Weather' },
 		{ href: '/contact', label: 'Contact' },
-		{ href: '/cv.pdf', label: 'CV', external: true }
+		{ href: '/cv.pdf', label: 'CV', external: true },
+		{ href: 'https://medium.com/@chang.j0918', label: 'Medium', external: true }
 	];
 </script>
 
